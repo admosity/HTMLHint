@@ -18,20 +18,20 @@ describe('Executable', function () {
       }
     }
 
-    c.stdout.on('data', function() {
-      expect(stdoutEnd || processEnd).to.be(false);
-    });
+
 
     c.stdout.on('close', function() {
       stdoutEnd = true;
-      expect(processEnd).to.be(false);
       checkDone();
     });
 
     c.on('exit', function() {
       processEnd = true;
-      expect(stdoutEnd).to.be(true);
       checkDone();
+    });
+
+    c.stdout.on('data', function() {
+      expect(stdoutEnd || processEnd).to.be(false);
     });
 
   });
